@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        java: [ '8', '11', '17' ]
+        java: [ '11', '17', '19' ]
 
     steps:
       - uses: actions/checkout@v3
@@ -18,11 +18,11 @@ jobs:
         uses: actions/setup-java@v3
         with:
           java-version: ${{matrix.Java}}
-          distribution: 'adopt'
+          distribution: 'temurin'
           cache: 'maven'
 
       - name: Build with Maven
-        run: mvn -B package -DskipTests=true --file pom.xml
+        run: mvn -B package -X -DskipTests=true --file pom.xml
 
   version_verify:
     needs: [build]
@@ -46,7 +46,7 @@ jobs:
         run: docker --version
 
       - name: Build with Maven
-        run: mvn -B package -DskipTests=true --file pom.xml
+        run: mvn -B package -X -DskipTests=true --file pom.xml
 
   QA-Test:
     needs: [build, version_verify]
