@@ -1,4 +1,4 @@
-FROM maven:3.8.5-openjdk-17-slim AS build
+FROM maven:3.8.5-openjdk-17 AS build
 
 COPY /src /app/src
 
@@ -14,6 +14,6 @@ WORKDIR /usr/src/app
 
 COPY --from=build /app/target/*.jar account.jar
 
-EXPOSE 8080
+EXPOSE 8082
 
 ENTRYPOINT ["java", "-jar", "account.jar"]
