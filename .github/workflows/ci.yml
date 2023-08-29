@@ -8,13 +8,17 @@ jobs:
 
   build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        java: [ '8', '11', '17' ]
+        
     steps:
-      - uses: actions/checkout@v3.6.0
-      - name: Set up JDK 17
-        uses: actions/setup-java@v3.12.0
+      - uses: actions/checkout@v3
+      - name: Set up JDK ${{matrix.Java}}
+        uses: actions/setup-java@v3
         with:
           java-version: '17'
-          distribution: 'adopt'
+          distribution: 'temurin'
           cache: 'maven'
 
       - name: Build with Maven
@@ -24,7 +28,7 @@ jobs:
     needs: [build]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3.6.0
+      - uses: actions/checkout@v3
 
       - name: list Directories
         run: ls -lha
@@ -45,7 +49,7 @@ jobs:
     needs: [build, version_verify]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3.6.0
+      - uses: actions/checkout@v3
 
       - name: Test Application
         run: |
@@ -57,7 +61,7 @@ jobs:
     needs: [QA-Test]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3.6.0
+      - uses: actions/checkout@v3
 
       - name: Test Application
         run: mvn clean verify -DskipTests=true
@@ -66,7 +70,7 @@ jobs:
     needs: [tests]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3.6.0
+      - uses: actions/checkout@v3
 
       - name: Deploy Application
         run: |
