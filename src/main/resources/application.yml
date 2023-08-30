@@ -1,2 +1,20 @@
 server:
   port: 8082
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/ms-account
+    username: postgres
+    password: root
+
+  apllication:
+    name: ms-account
+
+  #Hibernate Configuration
+  jpa:
+    database: POSTGRESQL
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
