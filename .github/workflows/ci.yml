@@ -8,27 +8,29 @@ jobs:
 
   build:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        java: [ '11', '17', '19' ]
-
     steps:
       - uses: actions/checkout@v3
-      - name: Set up JDK ${{matrix.Java}}
+      - name: Set up JDK 17
         uses: actions/setup-java@v3
         with:
-          java-version: ${{matrix.Java}}
+          java-version: 17
           distribution: 'temurin'
           cache: 'maven'
 
       - name: Build with Maven
-        run: mvn -B package -X -DskipTests=true --file pom.xml
+        run: mvn -B package -X -DskipTests --file pom.xml
 
   version_verify:
     needs: [build]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: 17
+          distribution: 'temurin'
+          cache: 'maven'
 
       - name: list Directories
         run: ls -lha
@@ -46,16 +48,23 @@ jobs:
         run: docker --version
 
       - name: Build with Maven
-        run: mvn -B package -X -DskipTests=true --file pom.xml
+        run: mvn -B package -X -DskipTests --file pom.xml
 
   QA-Test:
     needs: [build, version_verify]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+         java-version: 17
+         distribution: 'temurin'
+         cache: 'maven'
+
       - name: Test Application
         run: |
-          mvn clean verify -DskipTests=true
+          mvn clean verify -DskipTests
           ls -lha
           docker run -d --name=nginx -p 80:80 nginx:latest
 
@@ -64,15 +73,41 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+         java-version: 17
+         distribution: 'temurin'
+         cache: 'maven'
+
       - name: Test Application
-        run: mvn clean verify -DskipTests=true
+        run: mvn clean verify -DskipTests
 
   deploy:
     needs: [tests]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: 17
+          distribution: 'temurin'
+          cache: 'maven'
+
       - name: Deploy Application
         run: |
-          mvn clean install -DskipTests=true
-          mvn package -DskipTests=true
+          mvn clean install -DskipTests
+          mvn package -DskipTests
+
+      - name: Deploy Application
+        run: |
+          mvn clean install -DskipTests
+          mvn package -DskipTests
+
+      - name: Login to Docker Hub
+        run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+      - name: Build Docker Image
+        run: docker build -t devmenorzera/account .
+      - name: Publish Docker image
+        run: docker push devmenorzera/account
