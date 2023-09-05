@@ -30,14 +30,18 @@ jobs:
           java-version: 17
           distribution: 'temurin'
           cache: 'maven'
+      - name: Run Environment Java_HOME
+        run: |
+          echo $JAVA_HOME
+          java --version
+          mvn --version
+          sudo apt-get install git
 
       - uses: actions/checkout@master
       - name: Run Snyk to checkout for vulnerabilities
         uses: snyk/actions/maven@master
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        with:
-           command: monitor
 
   test:
     needs:
