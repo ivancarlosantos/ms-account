@@ -6,7 +6,7 @@ COPY /pom.xml /app
 
 RUN mvn -f /app/pom.xml clean package -Dmaven.test.skip
 
-FROM openjdk:17
+FROM openjdk:22-ea-12-jdk-slim
 
 LABEL key="core.ics"
 
