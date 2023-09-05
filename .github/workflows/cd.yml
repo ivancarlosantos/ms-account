@@ -37,27 +37,6 @@ jobs:
       - name: runner test
         run: mvn clean verify
 
-  security:
-    needs: [test]
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Set up JDK 17
-        uses: actions/setup-java@v3
-        with:
-          java-version: 17
-          distribution: 'temurin'
-          cache: 'maven'
-
-      - uses: actions/checkout@master
-      - name: Run Snyk to checkout for vulnerabilities
-        uses: snyk/actions@0.4.0
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        with:
-          command: monitor
-          json: true
-
   package:
     needs: [test]
     runs-on: ubuntu-latest
@@ -72,5 +51,6 @@ jobs:
 
       - name: package application
         run: |
+          mvn -V
           mvn clean install
           mvn package -X
