@@ -1,6 +1,5 @@
 package core.ms.account.infra.domain;
 
-import core.ms.account.infra.domain.status.AccountStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,5 +26,5 @@ public class Account implements Serializable {
     private String agencia;
     private String limite;
     private String nodeID;
-    private AccountStatus status;
+    private String status;
 }

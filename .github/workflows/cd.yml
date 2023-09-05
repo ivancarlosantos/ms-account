@@ -19,7 +19,7 @@ jobs:
       - name: Build with Maven
         run: mvn -B package -DskipTests --file pom.xml
 
-  test:
+  security:
     needs: [build]
     runs-on: ubuntu-latest
     steps:
@@ -31,8 +31,28 @@ jobs:
           distribution: 'temurin'
           cache: 'maven'
 
+      - uses: actions/checkout@master
+      - name: Run Snyk to checkout for vulnerabilities
+        uses: snyk/actions/maven@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          args: --severity-threshold=high
+
+  test:
+    needs: [build, security]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: 17
+          distribution: 'temurin'
+          cache: 'maven'
+
       - name: runner test
-        run: mvn clean verify -DskipTests
+        run: mvn clean verify
 
   package:
     needs: [test]
@@ -48,5 +68,5 @@ jobs:
 
       - name: package application
         run: |
-          mvn clean install -DskipTests
-          mvn package -X -DskipTests
+          mvn clean install
+          mvn package -X

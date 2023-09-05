@@ -1,13 +1,13 @@
-package core.ms.account.app.modelConfiguration;
+package core.ms.account.configuration;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class modelMapperConfig {
+public class ModelMapperConfig {
     @Bean
-public ModelMapper model(){
-    return new ModelMapper();
-}
+    public ModelMapper mapper(){
+        return new ModelMapper();
+    }
 }

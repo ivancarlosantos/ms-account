@@ -4,7 +4,7 @@ spring:
   application:
     name: ms-account
   datasource:
-    url: jdbc:postgresql://localhost:5432/ms-account
+    url: jdbc:postgresql://localhost:5432/account
     username: postgres
     password: root
   zipkin:

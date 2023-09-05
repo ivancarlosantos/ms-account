@@ -1,6 +1,6 @@
-package core.ms.account.app.controller;
+package core.ms.account.app.controller.test;
 
-import core.ms.account.app.service.TestServices;
+import core.ms.account.app.service.test.TestServices;
 import core.ms.account.infra.domain.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

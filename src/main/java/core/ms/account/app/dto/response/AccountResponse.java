@@ -1,13 +1,11 @@
 package core.ms.account.app.dto.response;
 
-import core.ms.account.infra.domain.status.AccountStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
-import javax.persistence.Entity;
 import java.io.Serializable;
 
 @Setter
@@ -21,5 +19,5 @@ public class AccountResponse implements Serializable {
     private String conta;
     private String agencia;
     private String limite;
-    private AccountStatus status;
+    private String status;
 }

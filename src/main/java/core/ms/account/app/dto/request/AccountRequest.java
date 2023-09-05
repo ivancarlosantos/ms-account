@@ -1,13 +1,11 @@
 package core.ms.account.app.dto.request;
 
-import core.ms.account.infra.domain.status.AccountStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
-import javax.persistence.Entity;
 import java.io.Serializable;
 
 @Setter
@@ -22,5 +20,5 @@ public class AccountRequest implements Serializable {
     private String agencia;
     private String limite;
     private String nodeID;
-    private AccountStatus status;
+    private String status;
 }
