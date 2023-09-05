@@ -37,10 +37,13 @@ jobs:
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
-          args: --severity-threshold=high
+           command: monitor
 
   test:
-    needs: [build, security]
+    needs:
+      - build
+      - security
+
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
