@@ -20,10 +20,7 @@ jobs:
         run: mvn -B package -DskipTests --file pom.xml
 
   test:
-    needs:
-      - build
-      - security
-
+    needs: [build]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
