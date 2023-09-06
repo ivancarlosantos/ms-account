@@ -48,6 +48,5 @@ jobs:
 
       - name: package application
         run: |
-          mvn -V
           mvn clean install
           mvn package -X
