@@ -19,6 +19,7 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.utility.DockerImageName;
 
 import java.util.List;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -33,9 +34,6 @@ class AccountConfigurationTest {
 
     @Autowired
     private AccountRepository accountRepository;
-
-    @Autowired
-    private TokenRequest tokenRequest;
 
     @Container
     static PostgreSQLContainer<?> container = new PostgreSQLContainer<>(
@@ -77,10 +75,10 @@ class AccountConfigurationTest {
         String conta = "00000000-00";
         String agencia = "00000000-00";
         String limite = "1000000";
-        Token nodeID = tokenRequest.generateToken();
+        String nodeID = UUID.randomUUID().toString();
         String status = AccountStatus.ATIVO.toString();
 
-        Account account = new Account(id, nome, conta, agencia, limite, nodeID.getToken(), status);
+        Account account = new Account(id, nome, conta, agencia, limite, nodeID, status);
 
         accountRepository.save(account);
 
@@ -90,7 +88,7 @@ class AccountConfigurationTest {
         assertEquals(agencia, account.getAgencia());
         assertEquals(conta, account.getConta());
         assertEquals(limite, account.getLimite());
-        assertEquals(nodeID.getToken(), account.getNodeID());
+        assertEquals(nodeID, account.getNodeID());
         assertEquals(status, account.getStatus());
     }
 
@@ -102,17 +100,17 @@ class AccountConfigurationTest {
         String conta = "00000000-00";
         String agencia = "00000000-00";
         String limite = "1000000";
-        Token nodeID = tokenRequest.generateToken();
+        String nodeID = UUID.randomUUID().toString();
         String status = AccountStatus.ATIVO.toString();
 
-        var rateAccount = new Account(id, nome, conta, agencia, limite, nodeID.getToken(), status);
-        rateAccount.setLimite(limite);
+        Account account = new Account(id, nome, conta, agencia, limite, nodeID, status);
 
-        accountRepository.save(rateAccount);
+        accountRepository.save(account);
 
         List<Account> accounts = accountRepository.findAll();
         assertEquals(1, accounts.size());
         assertEquals("Account Name", accounts.get(0).getNome());
+        assertEquals(AccountStatus.ATIVO.toString(), accounts.get(5).getStatus());
     }
 
     @Test
