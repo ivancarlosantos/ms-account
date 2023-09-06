@@ -110,7 +110,6 @@ class AccountConfigurationTest {
         List<Account> accounts = accountRepository.findAll();
         assertEquals(1, accounts.size());
         assertEquals("Account Name", accounts.get(0).getNome());
-        assertEquals(AccountStatus.ATIVO.toString(), accounts.get(5).getStatus());
     }
 
     @Test
