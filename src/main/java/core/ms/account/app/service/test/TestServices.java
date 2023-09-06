@@ -1,4 +1,4 @@
-package core.ms.account.app.services;
+package core.ms.account.app.service.test;
 
 import core.ms.account.infra.domain.Test;
 import org.springframework.stereotype.Service;

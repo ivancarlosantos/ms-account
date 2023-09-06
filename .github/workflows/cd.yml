@@ -32,7 +32,7 @@ jobs:
           cache: 'maven'
 
       - name: runner test
-        run: mvn clean verify -DskipTests
+        run: mvn test
 
   package:
     needs: [test]
@@ -48,5 +48,5 @@ jobs:
 
       - name: package application
         run: |
-          mvn clean install -DskipTests
-          mvn package -X -DskipTests
+          mvn clean install
+          mvn package -X
