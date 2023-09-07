@@ -1,7 +1,7 @@
 package core.ms.account.app.controller.query;
 
 import core.ms.account.app.dto.response.AccountResponse;
-import core.ms.account.app.service.query.AccountServiceQuery;
+import core.ms.account.app.service.query.AccountQueryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +16,7 @@ import java.util.List;
 @RequestMapping(path = "/domain/account")
 public class AccountQueryController {
     @Autowired
-    private AccountServiceQuery accountServiceQuery;
+    private AccountQueryService accountServiceQuery;
 
     @GetMapping
     public ResponseEntity<List<AccountResponse>> listAll(){
