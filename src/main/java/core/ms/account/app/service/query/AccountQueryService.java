@@ -15,7 +15,7 @@ import java.lang.reflect.Type;
 import java.util.List;
 
 @Service
-public class AccountServiceQuery {
+public class AccountQueryService {
 
     @Autowired
     private AccountRepository accountRepository;
